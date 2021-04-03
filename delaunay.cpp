@@ -12,7 +12,6 @@
 #include <ackermann_msgs/AckermannDriveStamped.h>
 #include <visualization_msgs/Marker.h>
 
-
 using namespace std;
 
 class NarrowPath {
