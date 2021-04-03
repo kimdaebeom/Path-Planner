@@ -1,5 +1,6 @@
-# Path-Planner
+## Path-Planner
 waypoint follower with pure pursuit algorithm
+& some additional codes or program usage for path-planner (relating whole codes)
 
 ### Pyroutelib3 
 using osm file and pyroutelib3 to make the way from start point to target point.
