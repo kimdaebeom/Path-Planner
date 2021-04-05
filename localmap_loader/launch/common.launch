@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find lms1xx)/launch/LMS1xx.launch"/>
+
+  <node pkg="platform_control" name="write_serial" type="write_serial" />
+
+</launch>
+

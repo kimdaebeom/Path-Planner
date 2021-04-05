@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+
+<launch>
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain" output="screen" name="localmap_loader_laser_filter">
+	  <rosparam command="load" file="$(find localmap_loader)/launch/box_filter.yaml" />
+	  <remap from="scan_filtered" to="localmap_loader_scan_filtered"/>
+  </node>
+
+  <!--<include file="$(find platform_connector)/launch/platform_connector.launch" />-->
+
+  <!--<include file="$(find lms1xx)/launch/LMS1xx.launch" />-->
+
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain" output="screen" name="laser_filter_approach">
+	  <rosparam command="load" file="$(find localmap_loader)/launch/box_filter_approach.yaml" />
+	  <remap from="scan_filtered" to="localmap_loader_approach_scan_filtered"/>
+  </node>
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain" output="screen" name="laser_filter_escape">
+	  <rosparam command="load" file="$(find localmap_loader)/launch/box_filter_escape.yaml" />
+	  <remap from="scan_filtered" to="localmap_loader_escape_scan_filtered"/>
+  </node>
+  
+  
+
+  <node pkg="localmap_loader" name="localmap_loader_node" type="localmap_loader_node" output="screen">
+	<!--remap from="raw_obstacles" to="localmap_loader_raw_obstacles"/-->
+	  <param name="control_factor" value="110" />
+	  <param name="right_steer_scale" type = "double" value="1.5" />
+	  <param name="throttle" value="3" />
+	  <param name="stop_count" value="1000" />
+	  <param name="start_distance" type="double" value="0.5" />
+	  <param name="end_distance" type="double" value="0.5" />
+	  <param name="approach_left_offset" value="7" />
+  </node>
+
+  <node name="localmap_loader_obstacle_extractor" pkg="obstacle_detector" type="obstacle_extractor_node">
+	<remap from="scan" to="localmap_loader_scan_filtered"/>
+	<remap from="raw_obstacles" to="localmap_loader_raw_obstacles"/>
+    <param name="active"               value="true"/>
+    <param name="use_scan"             value="true"/>
+    <param name="use_pcl"              value="false"/>
+
+    <param name="use_split_and_merge"    value="true"/>
+    <param name="circles_from_visibles"  value="false"/>
+    <param name="discard_converted_segments" value="false"/>
+    <param name="transform_coordinates"  value="true"/>
+
+    <param name="min_group_points"     value="3"/>
+
+    <param name="max_group_distance"   value="0.1"/>
+    <param name="distance_proportion"  value="0.00628"/>
+    <param name="max_split_distance"   value="0.1"/>
+    <param name="max_merge_separation" value="0.2"/>
+    <param name="max_merge_spread"     value="0.1"/>
+    <param name="max_circle_radius"    value="0.1"/>
+    <param name="radius_enlargement"   value="0.3"/>
+
+    <param name="frame_id"             value="laser"/>
+  </node>
+
+  <node name="obstacle_extractor_approach" pkg="obstacle_detector" type="obstacle_extractor_node">
+	<remap from="scan" to="localmap_loader_approach_scan_filtered"/>
+	<remap from="raw_obstacles" to="localmap_loader_approach_raw_obstacles"/>
+    <param name="active"               value="true"/>
+    <param name="use_scan"             value="true"/>
+    <param name="use_pcl"              value="false"/>
+
+    <param name="use_split_and_merge"    value="true"/>
+    <param name="circles_from_visibles"  value="false"/>
+    <param name="discard_converted_segments" value="false"/>
+    <param name="transform_coordinates"  value="true"/>
+
+    <param name="min_group_points"     value="3"/>
+
+    <param name="max_group_distance"   value="0.1"/>
+    <param name="distance_proportion"  value="0.00628"/>
+    <param name="max_split_distance"   value="0.2"/>
+    <param name="max_merge_separation" value="0.5"/>
+    <param name="max_merge_spread"     value="0.2"/>
+    <param name="max_circle_radius"    value="0.1"/>
+    <param name="radius_enlargement"   value="0.3"/>
+
+    <param name="frame_id"             value="laser"/>
+
+  </node>
+
+<node name="localmap_loader_obstacle_extractor_escape" pkg="obstacle_detector" type="obstacle_extractor_node">
+	<remap from="scan" to="localmap_loader_escape_scan_filtered"/>
+	<remap from="raw_obstacles" to="localmap_loader_escape_raw_obstacles"/>
+    <param name="active"               value="true"/>
+    <param name="use_scan"             value="true"/>
+    <param name="use_pcl"              value="false"/>
+
+    <param name="use_split_and_merge"    value="true"/>
+    <param name="circles_from_visibles"  value="false"/>
+    <param name="discard_converted_segments" value="false"/>
+    <param name="transform_coordinates"  value="true"/>
+
+    <param name="min_group_points"     value="3"/>
+
+    <param name="max_group_distance"   value="0.1"/>
+    <param name="distance_proportion"  value="0.00628"/>
+    <param name="max_split_distance"   value="0.2"/>
+    <param name="max_merge_separation" value="1.5"/>
+    <param name="max_merge_spread"     value="0.2"/>
+    <param name="max_circle_radius"    value="0.1"/>
+    <param name="radius_enlargement"   value="0.3"/>
+
+    <param name="frame_id"             value="laser"/>
+  </node>
+
+
+</launch>
+

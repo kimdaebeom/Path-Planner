@@ -1,0 +1,62 @@
+scan_filter_chain:
+- name: left_box_filter
+  type: laser_filters/LaserScanBoxFilter
+  params:
+    box_frame: laser 
+    max_x: 100.0
+    max_y: -5.0 
+    max_z: 0.3
+    min_x: 0.0
+    min_y: -100.0
+    min_z: -0.28
+
+- name: right_box_filter
+  type: laser_filters/LaserScanBoxFilter
+  params:
+    box_frame: laser 
+    max_x: 100.0
+    max_y: 100.0
+    max_z: 0.3
+    min_x: 0.0
+    min_y: 5.0
+    min_z: -0.28
+
+- name: front_box_filter
+  type: laser_filters/LaserScanBoxFilter
+  params:
+    box_frame: laser 
+    max_x: 100.3
+    max_y: 100.5
+    max_z: 0.3
+    min_x: 5.0
+    min_y: -100.5
+    min_z: -0.28
+
+- name: inner_box_filter
+  type: laser_filters/LaserScanBoxFilter
+  params:
+    box_frame: laser 
+    max_x: 0.3
+    max_y: 0.5
+    max_z: 0.3
+    min_x: -0.3
+    min_y: -0.5
+    min_z: -0.28
+- name: back_box_filter
+  type: laser_filters/LaserScanBoxFilter
+  params:
+    box_frame: laser 
+    max_x: 0.0
+    max_y: 100.0
+    max_z: 0.3
+    min_x: -100.0
+    min_y: -100.0
+    min_z: -0.28
+- name: range_filter
+  type: laser_filters/LaserScanRangeFilter
+  params:
+    use_message_range_limits: false   # if not specified defaults to false
+    lower_threshold: 0.1             # if not specified defaults to 0.0
+    upper_threshold: 8.0             # if not specified defaults to 100000.0
+    #lower_replacement_value: -.inf    # if not specified defaults to NaN
+    #upper_replacement_value: .inf     # if not specified defaults to NaN 
